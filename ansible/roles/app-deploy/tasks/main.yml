@@ -1,0 +1,8 @@
+---
+- name: copy of kubernetes manifest
+  copy:
+    src: "{{project_path}}/kubernetes/webapp-manifest-prod.yml"
+    dest: /home/{{user}}/{{app_manifest}}
+
+- name: deployment of app manifest
+  shell: "kubectl apply -f /home/{{user}}/{{app_manifest}}"

@@ -1,0 +1,4 @@
+user: ubuntu
+group: ubuntu
+app_manifest: webapp-manifest-prod.yml
+project_path: ~/repo/aws-k8s-cluster
