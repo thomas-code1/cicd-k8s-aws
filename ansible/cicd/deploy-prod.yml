@@ -1,0 +1,14 @@
+---
+- name: Deployment
+  hosts: all
+  become: true
+  tasks:
+  - name: copying file with playbook
+    copy:
+      src: ../kubernetes/webapp-manifest-prod.yml
+      dest: /home/ubuntu/webapp-manifest-prod.yml
+    
+  - name: Deploy the application on the k8s cluster
+    k8s:
+      state: present
+      src: /home/ubuntu/webapp-manifest-prod.yml

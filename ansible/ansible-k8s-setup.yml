@@ -1,0 +1,6 @@
+---
+- name: Installation
+  hosts: all
+  become: true
+  roles:
+    - role: ansible-k8s

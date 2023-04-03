@@ -39,7 +39,7 @@ spec:
     spec:
       containers:
         - name: pod
-          image: tomgfr/myrepo:latest
+          image: tomgfr/webapp:latest
           ports:
             - containerPort: 80
       imagePullSecrets:

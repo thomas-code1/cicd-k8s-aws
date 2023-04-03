@@ -1,6 +1,0 @@
----
-- name: "App Deployment"
-  hosts: controlplane
-  become: true
-  roles:
-    - role: app-deploy

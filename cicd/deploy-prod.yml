@@ -1,9 +1,0 @@
----
-- name: Deploying the application
-  hosts: all
-  become: true
-  tasks:
-    - name: Deploy the application on the k8s cluster
-      k8s:
-        state: present
-        src: ./kubernetes/webapp-manifest-prod.yml
