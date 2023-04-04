@@ -1,18 +1,26 @@
 ---
-- name: Pull docker image
-  hosts: test
+- name: Deployment of the web app on the k8s cluster
+  hosts: all
   become: true
+  vars:
+    user: ubuntu
+    group: ubuntu
   tasks:
-    - name: Pull the webapp image
-      docker_image: 
-        name: tomgfr/webapp:latest
-        source: pull
+  - name: Creation of folder for application manifests
+    file:
+      path: /home/{{user}}/app-manifest/test/
+      state: directory
+      owner: "{{user}}"
+      group: "{{group}}"
 
-    - name: Run the webapp container
-      docker_container:
-        name: webapp-test
-        image: tomgfr/webapp:latest
-        state: started
-        pull: true    # makes sure the image is always downloaded
-        ports:
-          - "80:80"
+  - name: Copy of application manifest files to the cluster
+    copy:
+      src: ../../kubernetes/test/webapp.yml
+      dest: /home/{{user}}/app-manifest/test/webapp.yml
+      owner: "{{user}}"
+      group: "{{group}}"
+    
+  - name: Deploy the application on the k8s cluster
+    k8s:
+      state: present
+      src: /home/{{user}}/app-manifest/test/webapp.yml

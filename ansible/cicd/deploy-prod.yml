@@ -2,6 +2,9 @@
 - name: Deployment of the web app on the k8s cluster
   hosts: all
   become: true
+  vars:
+    user: ubuntu
+    group: ubuntu
   tasks:
   - name: Creation of folder for application manifests
     file:
