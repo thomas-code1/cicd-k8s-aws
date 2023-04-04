@@ -1,2 +1,2 @@
-kubernetes/.dockerconfig.json
+.dockerconfig.json
 ansible/hosts

@@ -1,14 +1,23 @@
 ---
-- name: Deployment
+- name: Deployment of the web app on the k8s cluster
   hosts: all
   become: true
   tasks:
-  - name: copying file with playbook
+  - name: Creation of folder for application manifests
+    file:
+      path: /home/{{user}}/app-manifest/prod/
+      state: directory
+      owner: "{{user}}"
+      group: "{{group}}"
+
+  - name: Copy of application manifest files to the cluster
     copy:
-      src: ../kubernetes/webapp-manifest-prod.yml
-      dest: /home/ubuntu/webapp-manifest-prod.yml
+      src: ../../kubernetes/prod/webapp.yml
+      dest: /home/{{user}}/app-manifest/prod/webapp.yml
+      owner: "{{user}}"
+      group: "{{group}}"
     
   - name: Deploy the application on the k8s cluster
     k8s:
       state: present
-      src: /home/ubuntu/webapp-manifest-prod.yml
+      src: /home/{{user}}/app-manifest/prod/webapp.yml
