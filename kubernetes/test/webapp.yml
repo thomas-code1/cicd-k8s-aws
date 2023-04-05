@@ -32,7 +32,8 @@ spec:
     spec:
       containers:
         - name: pod
-          image: tomgfr/webapp:latest
+          image: containous/whoami
+          #          image: tomgfr/webapp:latest
           ports:
             - containerPort: 80
       imagePullSecrets:
