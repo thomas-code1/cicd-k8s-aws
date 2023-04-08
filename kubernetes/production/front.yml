@@ -1,0 +1,63 @@
+---
+# WordPress application
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wp
+  namespace: production
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: wp
+  template:
+    metadata:
+      labels:
+        app: wp
+    spec:
+      containers:
+        - name: wordpress
+          image: wordpress
+          env:
+            - name: WORDPRESS_DB_HOST
+              value: db-svc
+            - name: WORDPRESS_DB_NAME
+              value: dbname
+            - name: WORDPRESS_DB_USER
+              value: user
+            - name: WORDPRESS_DB_PASSWORD
+              value: password
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - mountPath: /var/www/html
+              name: wordpress
+      volumes:
+        - name: wordpress
+          hostPath:
+            path: /tmp/wordpress
+            type: DirectoryOrCreate
+
+---
+# Thomas webpage
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webpage
+  namespace: production
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: webpage
+  template:
+    metadata:
+      labels:
+        app: webpage
+    spec:
+      containers:
+        - name: wordpress
+          image: tomgfr/webapp:latest
+          ports:
+            - containerPort: 80

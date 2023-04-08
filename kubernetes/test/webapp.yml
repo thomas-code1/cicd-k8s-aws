@@ -11,7 +11,7 @@ metadata:
   name: my-secret
   namespace: test
 data:
-  .dockerconfigjson: ewogICAgImF1dGhzIjogewogICAgICAgICJodHRwczovL2luZGV4LmRvY2tlci5pby92MS8iOiB7CiAgICAgICAgICAgICJhdXRoIjogImRHOXRaMlp5T25ZemRUWmphVkZTU210alV5RmpWUT09IgogICAgICAgIH0KICAgIH0KfQ== # value to be replaced by the result of cat .dockerconfig.json | base64 (.dockerconfig.json created by the command docker login)
+  .dockerconfigjson: to_be_replaced # value to be replaced by the result of cat .dockerconfig.json | base64 (.dockerconfig.json created by the command docker login)
 type: kubernetes.io/dockerconfigjson
 
 ---
