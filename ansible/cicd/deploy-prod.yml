@@ -25,9 +25,11 @@
     k8s:
       state: present
       src: "/home/{{user}}/app-manifest/production/{{item}}"
+      kubeconfig: /home/{{user}}/.kube/config
     with_items:
     - namespace.yml
     - db.yml
     - front.yml
     - services.yml
     - storage.yml
+    - secret.yml
