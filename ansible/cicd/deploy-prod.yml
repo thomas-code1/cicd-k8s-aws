@@ -5,22 +5,29 @@
   vars:
     user: ubuntu
     group: ubuntu
+    
   tasks:
   - name: Creation of folder for application manifests
     file:
-      path: /home/{{user}}/app-manifest/prod/
+      path: /home/{{user}}/app-manifest/production/
       state: directory
       owner: "{{user}}"
       group: "{{group}}"
 
   - name: Copy of application manifest files to the cluster
     copy:
-      src: ../../kubernetes/prod/webapp.yml
-      dest: /home/{{user}}/app-manifest/prod/webapp.yml
+      src: ../../kubernetes/production/
+      dest: /home/{{user}}/app-manifest/production/
       owner: "{{user}}"
       group: "{{group}}"
     
   - name: Deploy the application on the k8s cluster
     k8s:
       state: present
-      src: /home/{{user}}/app-manifest/prod/webapp.yml
+      src: "/home/{{user}}/app-manifest/production/{{item}}"
+    with_items:
+    - namespace.yml
+    - db.yml
+    - front.yml
+    - services.yml
+    - storage.yml
