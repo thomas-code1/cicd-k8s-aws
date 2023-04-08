@@ -1,2 +1,3 @@
 .dockerconfig.json
 ansible/hosts
+.DS_Store
