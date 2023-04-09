@@ -1,6 +1,6 @@
 ---
 - name: Deployment of the web app on the k8s cluster
-  hosts: all
+  hosts: controlplane
   become: true
   vars:
     user: ubuntu
@@ -26,10 +26,10 @@
       state: present
       src: "/home/{{user}}/app-manifest/production/{{item}}"
       kubeconfig: /home/{{user}}/.kube/config
-    with_items:
+    loop:
     - namespace.yml
-    - db.yml
-    - front.yml
+    - mysql.yml
+    - wordpress.yml
     - services.yml
     - storage.yml
     - secret.yml
