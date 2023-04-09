@@ -1,3 +1,6 @@
 shared_dir:
   - /mnt/mysql
   - /mnt/wordpress
+
+uid: 1000
+gid: 1000

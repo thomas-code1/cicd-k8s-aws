@@ -22,7 +22,7 @@
 - name: Configure NFS export file
   lineinfile:
     path: /etc/exports
-    line: "{{ item }} *(rw,sync,all_squash,anonuid=1000,anongid=1000)"
+    line: "{{ item }} *(rw,sync,all_squash,anonuid={{uid}},anongid={{gid}})"
     insertafter: EOF
     state: present
   loop: "{{ shared_dir }}"
