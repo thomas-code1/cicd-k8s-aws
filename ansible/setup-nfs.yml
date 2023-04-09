@@ -1,0 +1,11 @@
+- name: Setup of NFS server
+  hosts: nfs
+  become: true
+  roles:
+    - role: nfs-server
+
+- name: Setup of NFS clients
+  hosts: k8s
+  become: true
+  roles:
+    - role: nfs-client

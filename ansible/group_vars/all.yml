@@ -1,0 +1,3 @@
+shared_dir:
+  - /mnt/mysql
+  - /mnt/wordpress

@@ -1,0 +1,6 @@
+---
+- name: NFS client installation
+  apt:
+    name: nfs-common
+    state: present
+    update_cache: yes

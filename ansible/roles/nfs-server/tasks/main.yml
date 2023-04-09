@@ -1,0 +1,37 @@
+---
+- name: NFS package installation
+  apt:
+    name: nfs-kernel-server
+    state: present
+    update_cache: yes
+
+- name: Create shared folders
+  file:
+    path: "{{item}}"
+    state: directory
+  loop: "{{ shared_dir }}"
+
+- name: Setup of ownership and mode
+  file:
+    path: "{{ item }}"
+    owner: nobody
+    group: nogroup
+    mode: 0777
+  loop: "{{ shared_dir }}"
+
+- name: Configure NFS export file
+  lineinfile:
+    path: /etc/exports
+    line: "{{ item }} *(rw,sync,all_squash,anonuid=1000,anongid=1000)"
+    insertafter: EOF
+    state: present
+  loop: "{{ shared_dir }}"
+
+- name: Activate the NFS configuration
+  command: exportfs -a
+
+- name: Starting NFS server
+  service:
+    name: nfs-server
+    state: started
+    enabled: yes
