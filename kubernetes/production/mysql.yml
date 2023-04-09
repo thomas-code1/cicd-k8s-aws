@@ -1,0 +1,49 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db
+  namespace: production
+  labels:
+    app: db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db
+  template:
+    metadata:
+      labels:
+        app: db
+    spec:
+      containers:
+        - name: db
+          image: mysql:5.7
+          env:
+            - name: MYSQL_DATABASE
+              value: wp-database
+            - name: MYSQL_USER
+              value: user
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: userpwd
+            - name: MYSQL_ROOT_PASSWORD # rootpwd
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret # refers to the name of the secret
+                  key: rootpwd # one of the keys of the secret
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/mysql
+          ports:
+            - containerPort: 3306
+              name: mysql
+          securityContext:
+            runAsUser: 1000
+            allowPrivilegeEscalation: false
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: mysql-pvc

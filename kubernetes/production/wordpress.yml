@@ -22,22 +22,27 @@ spec:
             - name: WORDPRESS_DB_HOST
               value: db-svc
             - name: WORDPRESS_DB_NAME
-              value: dbname
+              value: wp-database
             - name: WORDPRESS_DB_USER
               value: user
             - name: WORDPRESS_DB_PASSWORD
-              value: password
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: userpwd
           ports:
             - containerPort: 80
+          securityContext:
+            runAsUser: 1000
+            allowPrivilegeEscalation: false
+
           volumeMounts:
             - mountPath: /var/www/html
               name: wordpress
       volumes:
         - name: wordpress
-          hostPath:
-            path: /tmp/wordpress
-            type: DirectoryOrCreate
-
+          persistentVolumeClaim:
+            claimName: wordpress-pvc
 ---
 # Thomas webpage
 

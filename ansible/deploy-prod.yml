@@ -16,7 +16,7 @@
 
   - name: Copy of application manifest files to the cluster
     copy:
-      src: ../../kubernetes/production/
+      src: ../kubernetes/production/
       dest: /home/{{user}}/app-manifest/production/
       owner: "{{user}}"
       group: "{{group}}"
