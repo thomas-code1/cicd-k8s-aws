@@ -22,10 +22,11 @@
 - name: Configure NFS export file
   lineinfile:
     path: /etc/exports
-    line: "{{ item }} *(rw,sync,all_squash,anonuid={{uid}},anongid={{gid}})"
+    line: |
+      {{ shared_dir[0] }} {{hostvars['controlplane'].private_ip}}(rw,sync,all_squash,anonuid={{mysql_uid}},anongid={{mysql_gid}},no_subtree_check) {{hostvars['worker01'].private_ip}}(rw,sync,all_squash,anonuid={{mysql_uid}},anongid={{mysql_gid}},no_subtree_check)
+      {{ shared_dir[1] }} {{hostvars['controlplane'].private_ip}}(rw,sync,no_root_squash,no_subtree_check) {{hostvars['worker01'].private_ip}}(rw,sync,no_root_squash,no_subtree_check)
     insertafter: EOF
     state: present
-  loop: "{{ shared_dir }}"
 
 - name: Activate the NFS configuration
   command: exportfs -a

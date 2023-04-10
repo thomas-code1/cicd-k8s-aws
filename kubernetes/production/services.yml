@@ -4,12 +4,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: wp-svc
+  name: wordpress-svc
   namespace: production
 spec:
   type: NodePort
   selector:
-    app: wp
+    app: wordpress
   ports:
     - port: 80
       targetPort: 80
@@ -18,11 +18,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: db-svc
+  name: mysql-svc
   namespace: production
 spec:
   selector:
-    app: db
+    app: mysql
   ports:
     - port: 3306
       targetPort: 3306

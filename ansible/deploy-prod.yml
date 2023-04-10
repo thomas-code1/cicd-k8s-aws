@@ -2,10 +2,6 @@
 - name: Deployment of the web app on the k8s cluster
   hosts: controlplane
   become: true
-  vars:
-    user: ubuntu
-    group: ubuntu
-    
   tasks:
   - name: Creation of folder for application manifests
     file:
@@ -18,8 +14,14 @@
     copy:
       src: ../kubernetes/production/
       dest: /home/{{user}}/app-manifest/production/
-      owner: "{{user}}"
+      owner: "{{user}}" 
       group: "{{group}}"
+
+  - name: replace NFS server IP
+    replace:
+      path: "/home/{{user}}/app-manifest/production/storage.yml"
+      regexp: "nfs_ip_tbc"
+      replace: "{{hostvars['nfs'].private_ip}}"
     
   - name: Deploy the application on the k8s cluster
     k8s:

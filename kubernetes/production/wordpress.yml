@@ -3,24 +3,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: wp
+  name: wordpress
   namespace: production
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: wp
+      app: wordpress
   template:
     metadata:
       labels:
-        app: wp
+        app: wordpress
     spec:
       containers:
         - name: wordpress
-          image: wordpress
+          image: wordpress:latest
           env:
             - name: WORDPRESS_DB_HOST
-              value: db-svc
+              value: mysql-svc
             - name: WORDPRESS_DB_NAME
               value: wp-database
             - name: WORDPRESS_DB_USER
@@ -32,9 +32,11 @@ spec:
                   key: userpwd
           ports:
             - containerPort: 80
-          securityContext:
-            runAsUser: 1000
-            allowPrivilegeEscalation: false
+          # not possible to set uid 33 because of apache 80 privileged port which needs root...
+          # securityContext: # 33 ==> uid of user www-data (wordpress)
+          #   runAsUser: 33
+          #   runAsGroup: 33
+          #   allowPrivilegeEscalation: false
 
           volumeMounts:
             - mountPath: /var/www/html

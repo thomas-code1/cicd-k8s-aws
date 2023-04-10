@@ -1,4 +1,6 @@
 ---
+# MYSQL
+
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -31,11 +33,13 @@ spec:
   #  storageClassName: ebs-storage-class
   nfs:
     path: /mnt/mysql
-    server: 10.0.0.254
+    server: nfs_ip_tbc
     readOnly: false
   persistentVolumeReclaimPolicy: Recycle # it is retained by default if the PVC is deleted, or Delete, or Recycle
 
 ---
+# WORDPRESS
+
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -68,7 +72,7 @@ spec:
   #  storageClassName: ebs-storage-class
   nfs:
     path: /mnt/wordpress
-    server: 10.0.0.254
+    server: nfs_ip_tbc
     readOnly: false
   persistentVolumeReclaimPolicy: Recycle # it is retained by default if the PVC is deleted, or Delete, or Recycle
 

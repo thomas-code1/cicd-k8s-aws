@@ -2,22 +2,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: db
+  name: mysql
   namespace: production
   labels:
-    app: db
+    app: mysql
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: db
+      app: mysql
   template:
     metadata:
       labels:
-        app: db
+        app: mysql
     spec:
       containers:
-        - name: db
+        - name: mysql
           image: mysql:5.7
           env:
             - name: MYSQL_DATABASE
@@ -40,8 +40,9 @@ spec:
           ports:
             - containerPort: 3306
               name: mysql
-          securityContext:
-            runAsUser: 1000
+          securityContext: # 999 ==> uid of user systemd-coredump (mysql)
+            runAsUser: 999
+            runAsGroup: 999
             allowPrivilegeEscalation: false
       volumes:
         - name: data
