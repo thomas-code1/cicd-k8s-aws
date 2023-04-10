@@ -35,3 +35,4 @@
     - services.yml
     - storage.yml
     - secret.yml
+    - webpage.yml

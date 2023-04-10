@@ -1,0 +1,23 @@
+---
+# Thomas webpage
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webpage
+  namespace: production
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: webpage
+  template:
+    metadata:
+      labels:
+        app: webpage
+    spec:
+      containers:
+        - name: wordpress
+          image: tomgfr/webapp:latest
+          ports:
+            - containerPort: 80
