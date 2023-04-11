@@ -16,6 +16,9 @@ spec:
       labels:
         app: mysql
     spec:
+      securityContext: # 999 ==> uid of user systemd-coredump (mysql)
+        runAsUser: 999
+        runAsGroup: 999
       containers:
         - name: mysql
           image: mysql:5.7
@@ -34,16 +37,12 @@ spec:
                 secretKeyRef:
                   name: db-secret # refers to the name of the secret
                   key: rootpwd # one of the keys of the secret
-          volumeMounts:
-            - name: data
-              mountPath: /var/lib/mysql
           ports:
             - containerPort: 3306
               name: mysql
-          securityContext: # 999 ==> uid of user systemd-coredump (mysql)
-            runAsUser: 999
-            runAsGroup: 999
-            allowPrivilegeEscalation: false
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/mysql
       volumes:
         - name: data
           persistentVolumeClaim:

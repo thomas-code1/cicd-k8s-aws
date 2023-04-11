@@ -15,6 +15,12 @@ spec:
       labels:
         app: wordpress
     spec:
+      # securityContext: # 33 ==> uid of user www-data (wordpress)
+      #   fsGroup: 33
+      #   # runAsUser: 33
+      #   # runAsGroup: 33
+      # not possible to set uid 33 because of apache 80 privileged port which needs root...
+
       containers:
         - name: wordpress
           image: wordpress:latest
@@ -32,12 +38,6 @@ spec:
                   key: userpwd
           ports:
             - containerPort: 80
-          # not possible to set uid 33 because of apache 80 privileged port which needs root...
-          # securityContext: # 33 ==> uid of user www-data (wordpress)
-          #   runAsUser: 33
-          #   runAsGroup: 33
-          #   allowPrivilegeEscalation: false
-
           volumeMounts:
             - mountPath: /var/www/html
               name: wordpress
