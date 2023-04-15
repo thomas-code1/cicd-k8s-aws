@@ -7,8 +7,10 @@ shared_dir:
     conf: (rw,sync,all_squash,anonuid=999,anongid=999,no_subtree_check)
   - path: /mnt/wordpress
     conf: (rw,sync,no_root_squash,no_subtree_check)
+  - path: /mnt/myapp
+    conf: (rw,sync,no_root_squash,no_subtree_check)
 
 user: ubuntu
 group: ubuntu
 
-nfs: nfs.cluster
+nfs_dn: nfs.cluster

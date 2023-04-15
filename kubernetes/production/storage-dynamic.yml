@@ -12,7 +12,7 @@ spec:
   #     storage: mysql-storage
   accessModes:
     - ReadWriteMany
-  storageClassName: fs-client
+  storageClassName: nfs-client
   resources:
     requests:
       storage: 100Mi
