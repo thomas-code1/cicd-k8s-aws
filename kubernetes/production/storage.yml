@@ -30,7 +30,6 @@ spec:
   volumeMode: Filesystem
   accessModes:
     - ReadWriteMany # or ReadOnlyMany or ReadWriteMany
-  #  storageClassName: ebs-storage-class
   nfs:
     path: /mnt/mysql
     server: nfs_ip_tbc
@@ -54,7 +53,6 @@ spec:
   resources:
     requests:
       storage: 100Mi
-
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -75,15 +73,3 @@ spec:
     server: nfs_ip_tbc
     readOnly: false
   persistentVolumeReclaimPolicy: Recycle # it is retained by default if the PVC is deleted, or Delete, or Recycle
-
-# ---
-# apiVersion: storage.k8s.io/v1
-# kind: StorageClass
-# metadata:
-#   name: ebs-storage-class
-# provisioner: kubernetes.io/aws-ebs
-# parameters:
-#   type: gp2
-#   iopsPerGB: "10"
-#   fsType: ext4
-#   zone: eu-west-2

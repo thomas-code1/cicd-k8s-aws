@@ -14,25 +14,29 @@
     copy:
       src: ../kubernetes/production/
       dest: /home/{{user}}/app-manifest/production/
-      owner: "{{user}}" 
+      owner: "{{user}}"
       group: "{{group}}"
 
   - name: replace NFS server IP
     replace:
-      path: "/home/{{user}}/app-manifest/production/storage.yml"
+      path: "/home/{{user}}/app-manifest/production/{{item}}"
       regexp: "nfs_ip_tbc"
-      replace: "{{hostvars['nfs'].private_ip}}"
-    
-  - name: Deploy the application on the k8s cluster
-    k8s:
-      state: present
-      src: "/home/{{user}}/app-manifest/production/{{item}}"
-      kubeconfig: /home/{{user}}/.kube/config
+      replace: "{{nfs}}"
     loop:
-    - namespace.yml
-    - mysql.yml
-    - wordpress.yml
-    - services.yml
     - storage.yml
-    - secret.yml
-    - webpage.yml
+    - storage-dynamic.yml
+
+    
+  # - name: Deploy the application on the k8s cluster
+  #   k8s:
+  #     state: present
+  #     src: "/home/{{user}}/app-manifest/production/{{item}}"
+  #     kubeconfig: /home/{{user}}/.kube/config
+  #   loop:
+  #   - namespace.yml
+  #   - mysql.yml
+  #   - wordpress.yml
+  #   - services.yml
+  #   - storage.yml
+  #   - secret.yml
+  #   - webpage.yml

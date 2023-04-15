@@ -1,3 +1,4 @@
 .dockerconfig.json
 ansible/hosts
 .DS_Store
+kubernetes/production/nfs-external-provisioner/*
