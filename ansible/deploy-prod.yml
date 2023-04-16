@@ -21,7 +21,7 @@
     - namespace.yml
     - secret.yml
     - services.yml
-    - storage-dynamic.yml
+    - nfs-dynamic.yml
     - webpage.yml
     - wordpress.yml
 
@@ -31,7 +31,7 @@
       regexp: "nfs_ip_tbc"
       replace: "{{nfs_dn}}"
     loop:
-    - storage-dynamic.yml
+    - nfs-dynamic.yml
 
   - name: Deploy the application on the k8s cluster
     k8s:
@@ -43,6 +43,6 @@
     - namespace.yml
     - secret.yml
     - services.yml
-    - storage-dynamic.yml
+    - nfs-dynamic.yml
     - webpage.yml
     - wordpress.yml
